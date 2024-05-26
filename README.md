@@ -4,10 +4,7 @@
 ```
 docker compose up -d --build
 ```
-## Run command line in container:
-```
-docker compose run --rm php /bin/sh
-```
+
 ## Create laravel project via composer:
 ```
 docker compose run --rm composer create-project laravel/laravel .
@@ -22,11 +19,15 @@ pada saat running pertama kali akan error karena gak bisa akses file tertentu gu
 ```
 docker compose run --rm php /bin/sh
 ```
- 
+lalu
 ```
 chown -R laravel:laravel /var/www/html
 ```
 
+## Run command line in container:
+```
+docker compose run --rm php /bin/sh
+```
 ## komen laravel lainnya
 
 ```

@@ -35,7 +35,6 @@ docker-compose run --rm artisan migrate
 
 ```
 docker-compose run --rm npm run dev
-
 ```
 
 gunakan untuk akses artisan yang biasanya di lokal dengan untuk `docker compose up -d --build` 

@@ -42,3 +42,10 @@ gunakan untuk akses artisan yang biasanya di lokal dengan untuk `docker compose 
 ```
 docker-compose run --rm <perintah laravelmu>
 ```
+
+## restore db 
+masukan data sql mu di pginit
+lalu jalankan perintah berikut
+```
+docker exec -i <container postgreesql> pg_restore -U postgres -d test_restore /docker-entrypoint-initdb.d/<nama_db_mu>.sql
+```

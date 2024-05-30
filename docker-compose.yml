@@ -107,6 +107,19 @@ services:
         networks:
             - laravel
 
+    dbadmin:
+        depends_on:
+            - postgres
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: laravel
+            PGADMIN_DEFAULT_PASSWORD: secret
+        ports:
+            - "5050:80"
+        networks:
+            - laravel
+
 
 
 

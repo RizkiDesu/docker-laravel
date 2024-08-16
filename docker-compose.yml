@@ -1,19 +1,16 @@
 version: "3.9"
-
 networks:
     laravel:
         name: laravel
-
 services:
-
     nginx:
         build:
             context: .
             dockerfile: nginx.dockerfile
         depends_on:
             - php
-            # - mysql
-            - postgres
+            - mysql
+            # - postgres
         container_name: nginx
         ports:
             - 80:80
@@ -35,6 +32,7 @@ services:
 #            - ./src:/var/www/html
 #        networks:
 #            - virtual-fair
+
     php:
         build:
             context: .
@@ -45,37 +43,50 @@ services:
         networks:
             - laravel
 
-    postgres:
-        image: postgres:15
+    # postgres:
+    #     image: postgres:15
+    #     platform: linux/amd64
+    #     container_name: postgres
+    #     ports:
+    #         - 5432:5432
+    #     volumes:
+    #         - ./postgresql:/var/lib/postgresql/data
+    #         - ./pginit:/docker-entrypoint-initdb.d
+    #     environment:
+    #         POSTGRES_DB: postgres
+    #         POSTGRES_USER: postgres
+    #         POSTGRES_PASSWORD: admin123
+    #     networks:
+    #         - laravel
+
+    mysql:
+        image: mysql:8.0.27
         platform: linux/amd64
-        container_name: postgres
+        container_name: mysql
         ports:
-            - 5432:5432
+            - 3306:3306
         volumes:
-            - ./postgresql:/var/lib/postgresql/data
-            - ./pginit:/docker-entrypoint-initdb.d
+            - ./mysql:/var/lib/mysql
         environment:
-            POSTGRES_DB: postgres
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: admin123
+            MYSQL_DATABASE: laraveldb
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: laravel
+            MYSQL_ROOT_PASSWORD: secret
         networks:
             - laravel
 
-    # mysql:
-    #     image: mysql:8.0.27
-    #     platform: linux/amd64
-    #     container_name: mysql
-    #     ports:
-    #         - 3306:3306
-    #     volumes:
-    #         - ./mysql:/var/lib/mysql
-    #     environment:
-    #         MYSQL_DATABASE: laraveldb
-    #         MYSQL_USER: laravel
-    #         MYSQL_PASSWORD: laravel
-    #         MYSQL_ROOT_PASSWORD: secret
-    #     networks:
-    #         - laravel
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            MYSQL_ROOT_PASSWORD: secret
+        ports:
+            - 8080:80
+        networks:
+            - laravel
 
     composer:
         image: composer:latest
@@ -108,21 +119,21 @@ services:
         networks:
             - laravel
 
-    dbadmin:
-        # depends_on:
-        #     - postgres
-        image: dpage/pgadmin4
-        restart: always
-        environment:
-            - PGADMIN_DEFAULT_EMAIL=admin@example.com
-            - PGADMIN_DEFAULT_PASSWORD=admin123
-        volumes:
-            - ./pgadmin:/var/lib/pgadmin
-            # - ./pgadmin:/pgadmin4/
-        ports:
-            - "5050:80"
-        networks:
-            - laravel
+    # dbadmin:
+    #     # depends_on:
+    #     #     - postgres
+    #     image: dpage/pgadmin4
+    #     restart: always
+    #     environment:
+    #         - PGADMIN_DEFAULT_EMAIL=admin@example.com
+    #         - PGADMIN_DEFAULT_PASSWORD=admin123
+    #     volumes:
+    #         - ./pgadmin:/var/lib/pgadmin
+    #         # - ./pgadmin:/pgadmin4/
+    #     ports:
+    #         - "5050:80"
+    #     networks:
+    #         - laravel
 
 
 

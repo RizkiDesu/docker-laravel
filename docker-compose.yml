@@ -9,7 +9,7 @@ services:
             dockerfile: nginx.dockerfile
         depends_on:
             - php
-            - mysql
+            # - mysql
             # - postgres
         container_name: nginx
         ports:
@@ -59,34 +59,34 @@ services:
     #     networks:
     #         - website
 
-    mysql:
-        image: mysql:8.0.27
-        platform: linux/amd64
-        container_name: mysql
-        ports:
-            - 3306:3306
-        volumes:
-            - ./mysql:/var/lib/mysql
-        environment:
-            MYSQL_DATABASE: websitedb
-            MYSQL_USER: website
-            MYSQL_PASSWORD: website
-            MYSQL_ROOT_PASSWORD: secret
-        networks:
-            - website
+    # mysql:
+    #     image: mysql:8.0.27
+    #     platform: linux/amd64
+    #     container_name: mysql
+    #     ports:
+    #         - 3306:3306
+    #     volumes:
+    #         - ./mysql:/var/lib/mysql
+    #     environment:
+    #         MYSQL_DATABASE: websitedb
+    #         MYSQL_USER: website
+    #         MYSQL_PASSWORD: website
+    #         MYSQL_ROOT_PASSWORD: secret
+    #     networks:
+    #         - website
 
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
-        depends_on:
-            - mysql
-        environment:
-            PMA_HOST: mysql
-            MYSQL_ROOT_PASSWORD: secret
-        ports:
-            - 8080:80
-        networks:
-            - website
+    # phpmyadmin:
+    #     image: phpmyadmin/phpmyadmin
+    #     container_name: phpmyadmin
+    #     depends_on:
+    #         - mysql
+    #     environment:
+    #         PMA_HOST: mysql
+    #         MYSQL_ROOT_PASSWORD: secret
+    #     ports:
+    #         - 8080:80
+    #     networks:
+    #         - website
 
     composer:
         image: composer:latest

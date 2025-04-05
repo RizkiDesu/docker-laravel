@@ -3,3 +3,11 @@
 docker-compose.override.yml
 /.idea
 /.vscode
+/mysql
+/pgadmin
+/postgresql
+/pginit
+/src/public/*
+!/src/public/.gitkeep
+
+!/src/public/index.php

@@ -1,7 +1,7 @@
 version: "3.9"
 networks:
-    laravel:
-        name: laravel
+    website:
+        name: website
 services:
     nginx:
         build:
@@ -18,7 +18,7 @@ services:
         volumes:
             - ./src:/var/www/html
         networks:
-            - laravel
+            - website
 
 #    apache:
 #        build:
@@ -41,7 +41,7 @@ services:
         volumes:
             - ./src:/var/www/html
         networks:
-            - laravel
+            - website
 
     # postgres:
     #     image: postgres:15
@@ -57,7 +57,7 @@ services:
     #         POSTGRES_USER: postgres
     #         POSTGRES_PASSWORD: admin123
     #     networks:
-    #         - laravel
+    #         - website
 
     mysql:
         image: mysql:8.0.27
@@ -68,12 +68,12 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
-            MYSQL_DATABASE: laraveldb
-            MYSQL_USER: laravel
-            MYSQL_PASSWORD: laravel
+            MYSQL_DATABASE: websitedb
+            MYSQL_USER: website
+            MYSQL_PASSWORD: website
             MYSQL_ROOT_PASSWORD: secret
         networks:
-            - laravel
+            - website
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -86,7 +86,7 @@ services:
         ports:
             - 8080:80
         networks:
-            - laravel
+            - website
 
     composer:
         image: composer:latest
@@ -95,7 +95,7 @@ services:
             - ./src:/var/www/html
         working_dir: /var/www/html
         networks:
-            - laravel
+            - website
 
     artisan:
         build:
@@ -107,7 +107,7 @@ services:
         working_dir: /var/www/html
         entrypoint: ['php', 'artisan']
         networks:
-            - laravel
+            - website
 
     npm:
         image: node:current-alpine
@@ -117,7 +117,7 @@ services:
         working_dir: /var/www/html
         entrypoint: ['npm']
         networks:
-            - laravel
+            - website
 
     # dbadmin:
     #     # depends_on:
@@ -133,7 +133,7 @@ services:
     #     ports:
     #         - "5050:80"
     #     networks:
-    #         - laravel
+    #         - website
 
 
 
